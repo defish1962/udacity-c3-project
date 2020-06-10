@@ -16,4 +16,4 @@ before_install:
   - sudo mv ./kubectl /usr/local/bin/kubectl
 
 install:
-  - docker-compose -f Deployment/Docker/docker-compose.yml build --parallel
+  - docker-compose -f Deployment/Docker/docker-compose-build.yaml build --parallel
