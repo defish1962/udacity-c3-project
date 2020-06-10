@@ -1,0 +1,18 @@
+version: '3'
+services:
+  reverseproxy:
+    build:
+      context: .
+    image: defish1962/nginx
+  backend_user:
+    build:
+      context: ../../udagram-user-api
+    image: defish1962/udagram-user-api
+  backend_feed:
+    build:
+      context: ../../udagram-feed-api
+    image: defish1962/udagram-feed-api
+  frontend:
+    build:
+      context: ../../udagram-frontend
+    image: defish1962/udagram-frontend
