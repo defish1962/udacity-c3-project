@@ -1,34 +1,85 @@
 import AWS = require('aws-sdk');
 import { config } from './config/config';
 
-// Configure AWS
-const credentials = new AWS.SharedIniFileCredentials({ profile: 'default' });
+const c = config; //.dev;
+
+//Configure AWS
+var credentials = new AWS.SharedIniFileCredentials({ profile: 'default' });
 AWS.config.credentials = credentials;
 
 export const s3 = new AWS.S3({
   signatureVersion: 'v4',
-  region: config.aws_region,
-  params: { Bucket: config.aws_bucket },
+  region: c.aws_region,
+  params: { Bucket: c.aws_bucket },
 });
 
-// Generates an AWS signed URL for retrieving objects
+/* getGetSignedUrl generates an aws signed url to retreive an item
+ * @Params
+ *    key: string - the filename to be put into the s3 bucket
+ * @Returns:
+ *    a url as a string
+ */
 export function getGetSignedUrl(key: string): string {
   const signedUrlExpireSeconds = 60 * 5;
 
-  return s3.getSignedUrl('getObject', {
-    Bucket: config.aws_bucket,
+  const url = s3.getSignedUrl('getObject', {
+    Bucket: c.aws_bucket,
     Key: key,
     Expires: signedUrlExpireSeconds,
   });
+
+  return url;
 }
 
-// Generates an AWS signed URL for uploading objects
-export function getPutSignedUrl(key: string): string {
+/* getPutSignedUrl generates an aws signed url to put an item
+ * @Params
+ *    key: string - the filename to be retreived from s3 bucket
+ * @Returns:
+ *    a url as a string
+ */
+export function getPutSignedUrl(key: string) {
   const signedUrlExpireSeconds = 60 * 5;
 
-  return s3.getSignedUrl('putObject', {
-    Bucket: config.aws_bucket,
+  const url = s3.getSignedUrl('putObject', {
+    Bucket: c.aws_bucket,
     Key: key,
     Expires: signedUrlExpireSeconds,
   });
+
+  return url;
 }
+
+// import AWS = require('aws-sdk');
+// import { config } from './config/config';
+
+// // Configure AWS
+// const credentials = new AWS.SharedIniFileCredentials({ profile: 'default' });
+// AWS.config.credentials = credentials;
+
+// export const s3 = new AWS.S3({
+//   signatureVersion: 'v4',
+//   region: config.aws_region,
+//   params: { Bucket: config.aws_bucket },
+// });
+
+// // Generates an AWS signed URL for retrieving objects
+// export function getGetSignedUrl(key: string): string {
+//   const signedUrlExpireSeconds = 60 * 5;
+
+//   return s3.getSignedUrl('getObject', {
+//     Bucket: config.aws_bucket,
+//     Key: key,
+//     Expires: signedUrlExpireSeconds,
+//   });
+// }
+
+// // Generates an AWS signed URL for uploading objects
+// export function getPutSignedUrl(key: string): string {
+//   const signedUrlExpireSeconds = 60 * 5;
+
+//   return s3.getSignedUrl('putObject', {
+//     Bucket: config.aws_bucket,
+//     Key: key,
+//     Expires: signedUrlExpireSeconds,
+//   });
+// }

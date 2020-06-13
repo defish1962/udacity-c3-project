@@ -4,11 +4,11 @@ services:
     build:
       context: .
     image: defish1962/nginx
-  backend_user:
+  backend-user:
     build:
       context: ../../udagram-user-api
     image: defish1962/udagram-user-api
-  backend_feed:
+  backend-feed:
     build:
       context: ../../udagram-feed-api
     image: defish1962/udagram-feed-api
