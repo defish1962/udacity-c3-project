@@ -2,12 +2,8 @@
 
 Udagram is a simple cloud application developed alongside the Udacity Cloud Engineering Nanodegree. It allows users to register and log into a web client, post photos to the feed, and process photos using an image filtering microservice.
 
-The project is split into two parts:
-1. Frontend - Angular web application built with Ionic Framework
-2. Backend RESTful API - Node-Express application
-
 ## Getting Started
-The application is set up to build Docker containers through the .travis.yml file (found in the root directory) and to push those containers to Docker Hub. The containers are available in the following repositories:
+The application is set up to build Docker containers through the .travis.yml file (found in the root directory) and to push those containers to Docker Hub (hub.docker.io). The containers are available in the following repositories:
 
 * defish1962/udagram-feed-api - The Feed API microservice
 * defish1962/udagram-user-api - The User authentication API microservice
@@ -18,7 +14,7 @@ The application is set up to build Docker containers through the .travis.yml fil
 Create a PostgreSQL database either locally or on AWS RDS. Set the config values for environment variables prefixed with `POSTGRES_` in `set_env.sh`.
 
 ### S3
-Create an AWS S3 bucket. Set the config values for environment variables prefixed with `AWS_` in `set_env.sh`.
+Create an AWS S3 bucket. Set the config values for environment variables prefixed with `AWS_` in the env-configmap.yml file
 
 ### Kubernetes Pods
 Create your kubernetes pods with the kubectl command against the deployment (depl) and service YAML files in the Deployment/k8s folder (kubectl apply -f <name-depl.yml>)
@@ -28,7 +24,7 @@ aws-secret.yml
 env-configmap.yml
 env-secret.yml
 
-Deploy them as kubernetes secrets using the kubectl command:
+Deploy the secrets yaml files as kubernetes secrets using the kubectl command:
 kubectl apply -f aws-secret.yml
 kubectl apply -f env-configmap.yml
 kubectl apply -f env-secret.yml
